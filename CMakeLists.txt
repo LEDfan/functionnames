@@ -5,5 +5,5 @@ add_subdirectory(cppast)
 
 add_executable(functionnames main.cpp)
 target_link_libraries(functionnames PUBLIC cppast)
-
+install(TARGETS functionnames DESTINATION bin)
 
