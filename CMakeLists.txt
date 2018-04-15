@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
+add_definitions("-DDEBUG_ASSERT_DISABLE")
+
 add_subdirectory(cppast)
 
 add_executable(functionnames main.cpp)
