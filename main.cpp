@@ -38,7 +38,7 @@ bool check(const cppast::cpp_file &file) {
                                         bool compliant = false;
 
                                         if (name == "begin" || name == "end" || name == "cbegin" || name == "cend"
-                                                || name.substr(0, 8) == "operator") {
+                                                || name.substr(0, 8) == "operator" || name == "main") {
                                                 compliant = true;
                                         }
 
