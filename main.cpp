@@ -11,9 +11,6 @@
 
 #include <cppast/libclang_parser.hpp> // for libclang_parser, libclang_compile_config, cpp_entity,...
 #include <cppast/visitor.hpp>         // for visit()
-#include <cppast/code_generator.hpp>  // for generate_code()
-#include <cppast/cpp_entity_kind.hpp>        // for the cpp_entity_kind definition
-#include <cppast/cpp_forward_declarable.hpp> // for is_definition()
 #include <cppast/cpp_namespace.hpp>          // for cpp_namespace
 
 #define TEXT_NORMAL "\e[0m"
@@ -33,13 +30,15 @@ bool check(const cppast::cpp_file &file) {
                         || cppast::is_friended(e)) {
                         return true;
                 } else {
-                        if (e.kind() == cppast::cpp_entity_kind::function_t || e.kind() == cppast::cpp_entity_kind::member_function_t) {
+                        if (e.kind() == cppast::cpp_entity_kind::function_t
+                                || e.kind() == cppast::cpp_entity_kind::member_function_t) {
                                 if (!e.name().empty()) {
-                                        const auto& name = e.name();
+                                        const auto &name = e.name();
 
                                         bool compliant = false;
 
-                                        if (name == "begin" || name == "end" || name == "cbegin" || name == "cend" || name.substr(0, 8) == "operator") {
+                                        if (name == "begin" || name == "end" || name == "cbegin" || name == "cend"
+                                                || name.substr(0, 8) == "operator") {
                                                 compliant = true;
                                         }
 
@@ -47,11 +46,12 @@ bool check(const cppast::cpp_file &file) {
                                                 compliant = true;
                                         }
 
-
                                         if (compliant) {
-                                                std::cout << " - " <<  TEXT_GREEN << std::left << std::setw(6) << "[OK]" << TEXT_NORMAL;
+                                                std::cout << " - " << TEXT_GREEN << std::left << std::setw(6) << "[OK]"
+                                                          << TEXT_NORMAL;
                                         } else {
-                                                std::cout << " - " << TEXT_RED << std::left << std::setw(6) << "[ERR]" << TEXT_NORMAL;
+                                                std::cout << " - " << TEXT_RED << std::left << std::setw(6) << "[ERR]"
+                                                          << TEXT_NORMAL;
                                         }
 
                                         std::cout << e.name() << std::endl;
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) try {
         options.parse_positional("file");
         options.parse(argc, argv);
 
-       if (!options.count("file") || options["file"].as<std::string>().empty()) {
+        if (!options.count("file") || options["file"].as<std::string>().empty()) {
                 print_error("missing file argument");
                 return 1;
         } else {
@@ -155,7 +155,8 @@ int main(int argc, char *argv[]) try {
                         for (auto &name : options["macro_undefinition"].as<std::vector<std::string>>())
                                 config.undefine_macro(name);
 
-                config.set_flags(cppast::cpp_standard::cpp_14);
+                cppast::compile_flags flags;
+                config.set_flags(cppast::cpp_standard::cpp_14, flags);
 
                 // the logger is used to print diagnostics
                 cppast::stderr_diagnostic_logger logger;
