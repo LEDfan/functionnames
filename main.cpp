@@ -38,7 +38,7 @@ bool check(const cppast::cpp_file &file) {
                                         bool compliant = false;
 
                                         if (name == "begin" || name == "end" || name == "cbegin" || name == "cend"
-                                                || name.substr(0, 8) == "operator" || name == "main") {
+                                                || name.substr(0, 8) == "operator" || name == "main" || name == "at" || name == "data" || name == "rowCount" || name == "columnCount" || name == "metaObject" || name == "qt_metacast" || name == "tr" || name == "trUtf8" || name == "qt_metacall" || name == "qt_static_metacall" || name == "roleNames" || name == "size" || name == "remove") {
                                                 compliant = true;
                                         }
 
